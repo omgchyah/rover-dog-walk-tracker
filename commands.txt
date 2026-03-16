@@ -1,0 +1,2 @@
+python manage.py makemigrations
+python manage.py migratePYTHON MANAGE.PY GRAPH_MODELS > MODELS.DOT
