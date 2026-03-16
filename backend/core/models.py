@@ -62,13 +62,15 @@ class Walk(models.Model):
     start_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(null=True, blank=True)
 
-    pets = models.ManyToManyField(Pet, verbose_name="list of pets", through="PetWalk")
+    pets = models.ManyToManyField(
+        Pet, verbose_name="list of pets", through="PetWalkDetail"
+    )
 
     def __str__(self):
         return f"Date: {self.start_time.strftime('%Y-%m-%d %H:%M')}. Pets: {', '.join([p.name for p in self.pets.all()])}"
 
 
-class PetWalk(models.Model):
+class PetWalkDetail(models.Model):
     class MoodTypes(models.TextChoices):
         AS_USUAL = "As usual"
         HAPPY = "Happy"
@@ -77,8 +79,8 @@ class PetWalk(models.Model):
         LETHARGIC = "Lethargic"
         TIRED = "Tired"
 
-    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
-    walk = models.ForeignKey(Walk, on_delete=models.CASCADE)
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE, related_name="pet")
+    walk = models.ForeignKey(Walk, on_delete=models.CASCADE, related_name="details")
     poops = models.IntegerField(default=0)
     pees = models.IntegerField(default=0)
     mood = models.CharField(
