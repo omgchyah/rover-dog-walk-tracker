@@ -17,9 +17,13 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from core.views import HelloView
+from core.views import HelloView, place_list
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("hello/", HelloView.as_view(), name="hello"),
+    path("places/", place_list),
+    # path(
+    #     "places/<int:pk>/",
+    # ),
 ]
