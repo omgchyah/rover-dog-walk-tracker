@@ -27,6 +27,7 @@ class PlaceSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "description",
+            "category",
             "latitude",
             "longitude",
             "allows_unleashed",
