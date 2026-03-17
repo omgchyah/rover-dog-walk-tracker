@@ -15,6 +15,9 @@ class Place(models.Model):
 
     name = models.CharField(max_length=100, blank=False, null=False)
     description = models.CharField(max_length=150, blank=True, null=True)
+    category = models.CharField(
+        choices=PlaceCategory.choices, default=PlaceCategory.BUSINESS
+    )
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     allows_unleashed = models.BooleanField(default=False)
