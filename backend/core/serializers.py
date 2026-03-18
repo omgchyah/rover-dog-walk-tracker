@@ -68,7 +68,7 @@ class PetWalkDetailSerializer(serializers.ModelSerializer):
 class WalkPointSerializer(serializers.ModelSerializer):
     class Meta:
         model = WalkPoint
-        fields = ("latitude", "longitude", "created_at", "walk")
+        fields = ("id", "latitude", "longitude", "created_at", "walk")
 
 
 class WalkSerializer(serializers.ModelSerializer):
