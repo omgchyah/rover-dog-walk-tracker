@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema
 
 from core.models import Pet, Place, Review, PetWalkDetail, WalkPoint, Walk
 from core.serializers import (
@@ -76,6 +77,25 @@ class WalkViewSet(viewsets.ModelViewSet):
         elif request.method == "DELETE":
             detail.delete()
             return Response(status=204)
+
+    # Create the URL for walk/{id}/add_point
+    @extend_schema(
+        request=WalkPointSerializer,
+        responses={201: WalkPointSerializer},
+        description="Add a singleGPS coordinate to this specific walk.",
+    )
+    @action(detail=True, methods=["post"], url_path="add_point")
+    def add_point(self, request, pk=None):
+        walk = self.get_object()
+
+        data = request.data.copy()
+        data["walk"] = walk.id
+
+        serializer = WalkPointSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
 
 
 class PetWalkDetailViewSet(viewsets.ModelViewSet):
