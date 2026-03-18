@@ -68,14 +68,15 @@ class PetWalkDetailSerializer(serializers.ModelSerializer):
 class WalkPointSerializer(serializers.ModelSerializer):
     class Meta:
         model = WalkPoint
-        fields = ("latitude", "longitude", "created_at")
+        fields = ("latitude", "longitude", "created_at", "walk")
 
 
 class WalkSerializer(serializers.ModelSerializer):
     details = PetWalkDetailSerializer(many=True, read_only=True)
     # We chain the pet->petwalkdetail->walk to see the details and the pet nested inside the details
     points = WalkPointSerializer(many=True, read_only=True)
+    pets = serializers.PrimaryKeyRelatedField(many=True, queryset=Pet.objects.all())
 
     class Meta:
         model = Walk
-        fields = ("id", "start_time", "end_time", "details", "points")
+        fields = ("id", "start_time", "end_time", "pets", "details", "points")

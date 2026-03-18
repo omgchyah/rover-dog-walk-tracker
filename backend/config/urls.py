@@ -16,14 +16,27 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
-from core.views import HelloView, place_list
+from django.urls import include, path
+from core.views import (
+    PlaceViewSet,
+    PetViewSet,
+    ReviewViewSet,
+    PetWalkDetailViewSet,
+    WalkPointsViewSet,
+    WalkViewSet,
+)
+from rest_framework.routers import DefaultRouter
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("hello/", HelloView.as_view(), name="hello"),
-    path("places/", place_list),
-    # path(
-    #     "places/<int:pk>/",
-    # ),
+    path("silk/", include("silk.urls", namespace="silk")),
 ]
+
+router = DefaultRouter()
+router.register(r"pets", PetViewSet)
+router.register("places", PlaceViewSet)
+router.register("reviews", ReviewViewSet)
+router.register("walk", WalkViewSet)
+router.register(r"petwalkdetail", PetWalkDetailViewSet)
+router.register(r"walkpoint", WalkPointsViewSet)
+urlpatterns += router.urls

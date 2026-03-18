@@ -33,6 +33,10 @@ class WalkAdmin(admin.ModelAdmin):
 
     get_pets.short_description = "Pets on walk"
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.prefetch_related("pets")
+
 
 class ReviewInline(admin.TabularInline):
     model = Review
