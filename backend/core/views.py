@@ -41,6 +41,10 @@ class WalkViewSet(viewsets.ModelViewSet):
         url_path="pet/(?P<pet_pk>[^/.]+)",
     )
     def update_specific_pet(self, request, pk=None, pet_pk=None):
+        """
+        Manages a specific pet's report within a walk.
+        Supports GET, PATCH, PUT, and DELETE.
+        """
         walk = self.get_object()
 
         if request.method == "POST":
