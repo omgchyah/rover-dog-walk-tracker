@@ -5,7 +5,7 @@ Background/Foreground lifecycle
 In react Natice: You have the map which is the UI, and the tracker which talks to the GPS hardware
 
 Get the google maps key
-GOOGLE API KEY AIzaSyAX4w49IjXQLgzhcSV__ams_LNJQqjxYc4
+
 
 To avoid privacy problems, we need to tell app.json we are working with GPS
 
