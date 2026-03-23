@@ -2,13 +2,14 @@ import useLocation from 'hooks/useLocation';
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Text, FlatList, ActivityIndicator, Button } from 'react-native';
 import MapView, { Polyline, Marker } from 'react-native-maps';
+import { Delta, MapRegion } from 'types/location';
 
 const API_URL = 'http://10.103.1.238:8000'
 
 export default function HomeScreen() {
   const { route, isTracking, startTracking, stopTracking, initialLocation } = useLocation();
   const MapRef = useRef<MapView>(null);
-  const [currentDelta, setCurrentDelta] = useState({
+  const [currentDelta, setCurrentDelta] = useState<Delta>({
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
@@ -22,7 +23,7 @@ export default function HomeScreen() {
     }
   }
 
-  const handleRegionChange = (region: any) => {
+  const handleRegionChange = (region: MapRegion) => {
     setCurrentDelta({
       latitudeDelta: region.latitudeDelta,
       longitudeDelta: region.longitudeDelta,
