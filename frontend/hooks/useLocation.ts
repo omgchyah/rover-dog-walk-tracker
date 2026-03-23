@@ -3,17 +3,18 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { getWalkPoints } from "services/api";
 import * as Location from 'expo-location';
+import { Coordinate, MapRegion } from "types/location";
 
 
 const useLocation = () => {
     //The Box state to save the coordinates
-    const [route, setRoute] = useState<any[]>([]);
+    const [route, setRoute] = useState<Coordinate[]>([]);
     const [isTracking, setIsTracking] = useState<boolean>(false);
     const [subscription, setSubscription] = useState<Location.LocationSubscription | null>(null);
-    const [initialLocation, setInitialLocation] = useState<any>(null);
+    const [initialLocation, setInitialLocation] = useState<MapRegion | null>(null);
     
     //This passes the long and lat to my array of points
-    const handleNewRoute = (newPoint: Object) => {
+    const handleNewRoute = (newPoint: Coordinate) => {
         setRoute(prevRoute => [...prevRoute, newPoint])
     }
 
