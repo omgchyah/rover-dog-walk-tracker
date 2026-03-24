@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { getWalkPoints } from "services/api";
 import * as Location from 'expo-location';
 import { Coordinate, MapRegion } from "types/location";
 
