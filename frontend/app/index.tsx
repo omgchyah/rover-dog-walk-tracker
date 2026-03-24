@@ -1,4 +1,5 @@
 import useLocation from 'hooks/useLocation';
+import useWalkStats from 'hooks/useWalkStats';
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Text, FlatList, ActivityIndicator, Button } from 'react-native';
 import MapView, { Polyline, Marker } from 'react-native-maps';
@@ -8,58 +9,8 @@ const API_URL = 'http://10.103.1.238:8000'
 
 export default function HomeScreen() {
   const { route, isTracking, startTracking, stopTracking, initialLocation } = useLocation();
-  const MapRef = useRef<MapView>(null);
-  const [currentDelta, setCurrentDelta] = useState<Delta>({
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  });
-  const [isFollowing, setIsFollowing] = useState<boolean>(true);
-  
-  const handlePress = () => {
-    if (isTracking) {
-      stopTracking();
-    } else {
-      startTracking();
-    }
-  }
 
-  const handleRegionChange = (region: MapRegion) => {
-    setCurrentDelta({
-      latitudeDelta: region.latitudeDelta,
-      longitudeDelta: region.longitudeDelta,
-    })
-  }
-
-  const handleRecenter = () => {
-    setIsFollowing(true);
-
-    const target = route.length > 0 ? route[route.length - 1] : initialLocation;
-
-    if (target && MapRef.current) {
-      MapRef.current.animateToRegion({
-        latitude: target.latitude,
-        longitude: target.longitude,
-        latitudeDelta: currentDelta.latitudeDelta,
-        longitudeDelta: currentDelta.longitudeDelta,
-      }, 1000);
-    }
-  };
-  
-  useEffect(() => {
-    if (route.length > 0 && MapRef.current) {
-      const lastPoint = route[route.length - 1]
-      
-      if (isFollowing) {
-        MapRef.current.animateToRegion({
-          latitude: lastPoint.latitude,
-          longitude: lastPoint.longitude,
-          latitudeDelta: currentDelta.latitudeDelta,
-          longitudeDelta: currentDelta.longitudeDelta,
-        }, 1000)
-      }
-    }
-  }, [route]);
-  
+  const { handlePress, setIsFollowing, handleRegionChange, handleRecenter, MapRef } = useWalkStats({isTracking, startTracking, stopTracking, route, initialLocation});
   
   if (!initialLocation) {
     return (
@@ -68,7 +19,6 @@ export default function HomeScreen() {
             <Text>Finding your location...</Text>
         </View>
     )
-
   }
 
   return (
