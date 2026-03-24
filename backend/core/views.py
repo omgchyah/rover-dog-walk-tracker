@@ -38,7 +38,7 @@ class WalkViewSet(viewsets.ModelViewSet):
     # This creates the URL: /walk/{id}/pet/{pet_pk}/
     @action(
         detail=True,
-        methods=["patch", "get", "put", "delete"],
+        methods=["patch", "get", "put", "delete", "post"],
         url_path="pet/(?P<pet_pk>[^/.]+)",
     )
     def update_specific_pet(self, request, pk=None, pet_pk=None):
