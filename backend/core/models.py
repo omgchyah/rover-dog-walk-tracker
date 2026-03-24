@@ -82,12 +82,12 @@ class PetWalkDetail(models.Model):
         LETHARGIC = "Lethargic"
         TIRED = "Tired"
 
-    pet = models.ForeignKey(Pet, on_delete=models.CASCADE, related_name="pet")
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE, related_name="pets")
     walk = models.ForeignKey(Walk, on_delete=models.CASCADE, related_name="details")
     poops = models.IntegerField(default=0)
     pees = models.IntegerField(default=0)
     mood = models.CharField(
-        max_length=20, choices=MoodTypes, default=MoodTypes.AS_USUAL
+        max_length=20, choices=MoodTypes.choices, default=MoodTypes.AS_USUAL
     )
 
 
