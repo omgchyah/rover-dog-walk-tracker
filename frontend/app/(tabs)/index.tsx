@@ -1,7 +1,9 @@
-import useLocation from 'hooks/useLocation';
-import useMapController from 'hooks/useMapController';
-import { StyleSheet, View, Text, FlatList, ActivityIndicator, Button } from 'react-native';
+import AppButton from 'app/components/atoms/AppButton';
+import useLocation from '../../hooks/useLocation'
+import useMapController from '../../hooks/useMapController';
+import { StyleSheet, View, Text, ActivityIndicator, Button } from 'react-native';
 import MapView, { Polyline, Marker } from 'react-native-maps';
+import LoadingScreen from 'app/components/atoms/LoadingScreen';
 
 const API_URL = 'http://10.103.1.238:8000'
 
@@ -10,13 +12,7 @@ export default function HomeScreen() {
 
   const { handlePress, setIsFollowing, handleRegionChange, handleRecenter, MapRef } = useMapController({isTracking, startTracking, stopTracking, route, initialLocation});
   
-  if (!initialLocation) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator size="large" color="hotpink" />
-            <Text>Finding your location...</Text>
-        </View>
-    )
+  if (!initialLocation) return <LoadingScreen message='Finding your location...' />
   }
 
   return (
@@ -24,10 +20,8 @@ export default function HomeScreen() {
       <Text>
         Points collected: {route.length}
       </Text>
-      <Button
-      title={isTracking ? 'Pause Walk' : 'Start Walk'}
-      onPress={handlePress}>
-      </Button>
+
+
       <MapView
       onPanDrag={() => setIsFollowing(false)}
       ref={MapRef}
@@ -49,12 +43,21 @@ export default function HomeScreen() {
         )}
       </MapView>
       <View style={styles.buttonOverlay}>
-        <Button
+
+        <AppButton
         title='Center'
         onPress={handleRecenter}
-        color='green'
+        variant='primary'
         />
+
       </View>
+
+        <AppButton
+        title={isTracking ? 'Pause Walk' : 'Start Walk'}
+        onPress={handlePress}
+        variant={isTracking ? 'secondary' : 'primary'}
+        />
+
     </View>
   );
   
@@ -69,10 +72,10 @@ const styles = StyleSheet.create({
   },
   buttonOverlay: {
     position: 'absolute',
-    bottom: 20,
+    top: 20,
     right: 20,
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 16,
     padding: 5,
   }
 });
