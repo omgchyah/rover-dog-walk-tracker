@@ -1,16 +1,14 @@
 import useLocation from 'hooks/useLocation';
-import useWalkStats from 'hooks/useWalkStats';
-import React, { useEffect, useRef, useState } from 'react';
+import useMapController from 'hooks/useMapController';
 import { StyleSheet, View, Text, FlatList, ActivityIndicator, Button } from 'react-native';
 import MapView, { Polyline, Marker } from 'react-native-maps';
-import { Delta, MapRegion } from 'types/location';
 
 const API_URL = 'http://10.103.1.238:8000'
 
 export default function HomeScreen() {
   const { route, isTracking, startTracking, stopTracking, initialLocation } = useLocation();
 
-  const { handlePress, setIsFollowing, handleRegionChange, handleRecenter, MapRef } = useWalkStats({isTracking, startTracking, stopTracking, route, initialLocation});
+  const { handlePress, setIsFollowing, handleRegionChange, handleRecenter, MapRef } = useMapController({isTracking, startTracking, stopTracking, route, initialLocation});
   
   if (!initialLocation) {
     return (
@@ -78,3 +76,4 @@ const styles = StyleSheet.create({
     padding: 5,
   }
 });
+

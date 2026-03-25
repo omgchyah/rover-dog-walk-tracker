@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Coordinate, Delta, MapRegion } from "types/location";
 import MapView from "react-native-maps";
 
-interface useWalkStatsInterface {
+interface useMapControllerInterface {
 isTracking: boolean,
 startTracking: () => void,
 stopTracking: () => void,
@@ -10,8 +10,8 @@ route: Coordinate[],
 initialLocation: MapRegion | null
 }
 
-const useWalkStats = (
-{ isTracking, startTracking, stopTracking, route, initialLocation } : useWalkStatsInterface
+const useMapController = (
+{ isTracking, startTracking, stopTracking, route, initialLocation } : useMapControllerInterface
 ) => {
 
 const [currentDelta, setCurrentDelta] = useState<Delta>({
@@ -84,4 +84,4 @@ const [currentDelta, setCurrentDelta] = useState<Delta>({
 
             }
 
-            export default useWalkStats;
+            export default useMapController;
