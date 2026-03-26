@@ -40,11 +40,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 8,
     borderRadius: 32,
-    shadowColor: '#1B1F23',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.2,
-    shadowRadius: 12,
-    elevation: 4,
     borderWidth: 2,
     borderColor: 'transparent',
     overflow: 'hidden',
@@ -55,6 +50,11 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     backgroundColor: '#2E67D1',
+    shadowColor: '#1B1F23',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 4,
   },
   secondaryButton: {
     backgroundColor: 'white',
@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#2E67D1',
     position: 'absolute',
     top: 80,
-    right: 20,
+    alignSelf: 'center',
+    opacity: 0.7,
   },
   baseText: {
     fontSize: 16,

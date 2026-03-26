@@ -1,0 +1,66 @@
+pets_data = [
+    {
+        "name": "Quesito",
+        "owner_name": "Rossana",
+        "pet_type": "Dog",
+        "breed": "Pomeranian",
+        "is_social": True,
+        "is_pipican_allowed": True,
+    },
+    {
+        "name": "Ilusiones",
+        "owner_name": "Lluís",
+        "pet_type": "Dog",
+        "breed": "Bodeguero",
+        "is_social": True,
+        "is_pipican_allowed": True,
+    },
+    {
+        "name": "Pablito",
+        "owner_name": "Joan",
+        "pet_type": "Dog",
+        "breed": "Teckel",
+        "is_social": False,  # Pablito es un poco gruñón
+        "is_pipican_allowed": True,
+    },
+    {
+        "name": "Sir FurBall",
+        "owner_name": "Marta",
+        "pet_type": "Cat",
+        "breed": "Persian",
+        "is_social": False,
+        "is_pipican_allowed": False,  # Los gatos en el pipican... mala idea
+    },
+    {
+        "name": "Rex",
+        "owner_name": "BarnaDog",
+        "pet_type": "Dog",
+        "breed": "German Shepherd",
+        "is_social": True,
+        "is_pipican_allowed": True,
+    },
+    {
+        "name": "Nana",
+        "owner_name": "Luna",
+        "pet_type": "Dog",
+        "breed": "Mixed",
+        "is_social": True,
+        "is_pipican_allowed": True,
+    },
+    {
+        "name": "Pagès",
+        "owner_name": "Joan",
+        "pet_type": "Dog",
+        "breed": "Gos d'Atura",
+        "is_social": True,
+        "is_pipican_allowed": True,
+    },
+    {
+        "name": "Miracle",
+        "owner_name": "Rossana",
+        "pet_type": "Dog",
+        "breed": "Golden Retriever",
+        "is_social": True,
+        "is_pipican_allowed": True,
+    },
+]
