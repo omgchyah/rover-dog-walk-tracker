@@ -21,6 +21,7 @@ export default function HomeScreen() {
       route={route}
       />
 
+
       <MainMap
         setIsFollowing={setIsFollowing}
         MapRef={MapRef}
@@ -29,8 +30,15 @@ export default function HomeScreen() {
         route={route}
       />
 
+      <AppButton
+      title={'Follow me'}
+      onPress={handleRecenter}
+      variant='floating'
+      />
+
+
         <AppButton
-        title={isTracking ? 'Pause Walk' : 'Start Walk'}
+        title={isTracking ? 'Finish Walk' : 'Start Walk'}
         onPress={handlePress}
         variant={isTracking ? 'secondary' : 'primary'}
         />

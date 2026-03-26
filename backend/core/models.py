@@ -28,11 +28,18 @@ class Place(models.Model):
 
 
 class Review(models.Model):
+    class Star(models.IntegerChoices):
+        ONE = 1, "1 Star"
+        TWO = 2, "2 Stars"
+        THREE = 3, "3 Stars"
+        FOUR = 4, "4 Stars"
+        FIVE = 5, "5 Stars"
+
     author_name = models.CharField(max_length=20)
     title = models.CharField(max_length=50, blank=False, null=False)
-    star = models.DecimalField(max_length=5, max_digits=3, decimal_places=2)
+    star = models.IntegerField(choices=Star.choices, null=False, blank=False)
     body = models.TextField(blank=True, null=True)
-    note = models.CharField(blank=True, null=True)
+    note = models.CharField(max_length=100, blank=True, null=True)
     place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="reviews")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
