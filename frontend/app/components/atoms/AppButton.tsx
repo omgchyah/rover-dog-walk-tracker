@@ -4,7 +4,7 @@ import React from 'react'
 interface ButtonInterface {
   title: string;
   onPress: () => void;
-  variant: 'primary' | 'secondary' | 'danger';
+  variant: 'primary' | 'secondary' | 'danger' | 'floating';
 }
 
 const AppButton = (
@@ -36,9 +36,19 @@ export default AppButton
 const styles = StyleSheet.create({
   baseButton: {
     alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: 16,
     paddingHorizontal: 8,
-    borderRadius: 16,
+    borderRadius: 32,
+    shadowColor: '#1B1F23',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 4,
+    borderWidth: 2,
+    borderColor: 'transparent',
+    overflow: 'hidden',
+    margin: 16,
   },
   pressed: {
     opacity: 0.7,
@@ -48,10 +58,16 @@ const styles = StyleSheet.create({
   },
   secondaryButton: {
     backgroundColor: 'white',
-    borderColor: '#E5E5EA',
+    borderColor: '#C9CFD4',
   },
   dangerButton: {
     backgroundColor: '#FF3B30',
+  },
+  floatingButton: {
+    backgroundColor: '#2E67D1',
+    position: 'absolute',
+    top: 80,
+    right: 20,
   },
   baseText: {
     fontSize: 16,
@@ -65,5 +81,8 @@ const styles = StyleSheet.create({
   },
   dangerText: {
     color: '#FFFFFF',
-  }
+  },
+  floatingText: {
+    color: '#FFFFFF',
+  },
 })
