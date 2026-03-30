@@ -5,15 +5,15 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 import LoadingScreen from 'app/components/atoms/LoadingScreen';
 import MainMap from 'app/components/organisms/MainMap';
 import StatBar from 'app/components/molecules/StatBar';
-
-const API_URL = 'http://10.103.1.238:8000'
+import usePlace from 'hooks/usePlace';
+import { MapRegion } from 'types/location';
 
 export default function HomeScreen() {
   const { route, isTracking, startTracking, stopTracking, initialLocation } = useLocation();
-
   const { handlePress, setIsFollowing, handleRegionChange, handleRecenter, MapRef } = useMapController({isTracking, startTracking, stopTracking, route, initialLocation});
-  
-  if (!initialLocation) return <LoadingScreen message='Finding your location...' />
+  const { places, isLoading } = usePlace();
+
+  if (!initialLocation || isLoading) return <LoadingScreen message='Finding your location...' />
   
   return (
     <View style={styles.mainContainer}>
@@ -28,6 +28,7 @@ export default function HomeScreen() {
         initialLocation={initialLocation}
         handleRegionChange={handleRegionChange}
         route={route}
+        places={places}
       />
 
       <AppButton
