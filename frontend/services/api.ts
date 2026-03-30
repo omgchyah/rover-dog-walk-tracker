@@ -1,9 +1,8 @@
-
-const API_URL = 'http://10.103.1.238:8000'
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'https://rover-dog-walk-tracker-production.up.railway.app';
 
 export async function saveWalkPoint(walkId: number, latitude: number, longitude: number) {
     try {
-        const response = await fetch(`${API_URL}/walks/${walkId}/add_point/`, {
+        const response = await fetch(`${BASE_URL}/walks/${walkId}/add_point/`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
@@ -21,7 +20,7 @@ export async function saveWalkPoint(walkId: number, latitude: number, longitude:
 
 export async function getWalkPoints(walkId: number) {
     try {
-        const response = await fetch(`${API_URL}/walk/${walkId}`, {
+        const response = await fetch(`${BASE_URL}/walk/${walkId}/`, {
             method: 'GET',
             headers: {
                 "Content-type": "application/json"
@@ -32,5 +31,18 @@ export async function getWalkPoints(walkId: number) {
     } catch (error) {
         throw new Error(error instanceof Error ? error.message : String(error))
     }
-
+}
+export async function getPlaces() {
+    try {
+        const response = await fetch(`${BASE_URL}/places/`, {
+            method: 'GET',
+            headers: {
+                "Content-type": "application/json"
+            }
+        });
+        const places = await response.json();
+        return places;
+    } catch (error) {
+        throw new Error(error instanceof Error ? error.message : String(error))
+    }
 }
