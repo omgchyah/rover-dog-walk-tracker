@@ -1,9 +1,9 @@
-import { View, StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native';
 import React from 'react'
-import MapView, { Marker, Polyline, Region } from 'react-native-maps'
+import MapView, { Marker, Polyline } from 'react-native-maps'
 import { Coordinate, MapRegion } from 'types/location';
 import { Place } from 'types/place';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import AppMarker from '../atoms/AppMarker';
 
 interface MainMapInterface {
     setIsFollowing: (isFollowing: boolean) => void;
@@ -14,10 +14,11 @@ interface MainMapInterface {
     places: Place[];
     newCoordinate: Coordinate;
     handleMapLongPress: (coordinate: Coordinate) => void;
+    onPress: () => void;
 }
 
 const MainMap = (
-    {setIsFollowing, MapRef, initialLocation, handleRegionChange, route, places, handleMapLongPress, newCoordinate }: MainMapInterface
+    {setIsFollowing, MapRef, initialLocation, handleRegionChange, route, places, handleMapLongPress, newCoordinate, onPress }: MainMapInterface
 ) => {
   return (
     <MapView
@@ -28,22 +29,20 @@ const MainMap = (
       onRegionChangeComplete={(handleRegionChange)}
       showsUserLocation={true}
       followsUserLocation={false}
-      onLongPress={() => handleMapLongPress(newCoordinate)}
+      onLongPress={(e) => handleMapLongPress(newCoordinate)}
       >
-          {places.map(place => (
-              <Marker
-              key={place.id}
-              coordinate={{
-                latitude: Number(place.latitude),
-                longitude: Number(place.longitude)
-            }}
-              >
-                <View>
-                  <Ionicons />
+      {places.map(place => {
 
-                </View>
-              </Marker>
-          ))}
+        return (
+            <AppMarker
+              key={place.id}
+              category={place.category}
+              latitude={Number(place.latitude)}
+              longitude={Number(place.longitude)}
+              onPress={onPress}
+              />
+        );
+      })}
 
         {route.length > 0 && (
           <>
@@ -56,7 +55,7 @@ const MainMap = (
 
             <Marker
             coordinate={route[0]}
-            pinColor='grenavyen'
+            pinColor='navy'
             title="Start of Walk"
             />
           </>
@@ -71,5 +70,5 @@ const styles = StyleSheet.create({
       mapContainer: {
         width: '100%',
         height: '80%',
-      }
+      },
 })
