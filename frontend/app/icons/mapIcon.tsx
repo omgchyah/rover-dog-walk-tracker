@@ -1,5 +1,5 @@
 import { MaterialCommunityIcons, FontAwesome6, FontAwesome5, FontAwesome, Ionicons } from '@expo/vector-icons';
-import { COLORS } from '../../theme/colors';
+import COLORS from '../theme/colors';
 
 export const mapIcon = (category: string) => {
   switch (category) {

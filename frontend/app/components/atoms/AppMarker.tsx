@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native';
-import { mapIcon } from './mapIcon';
+import { mapIcon } from '../../icons/mapIcon';
 import { MaterialCommunityIcons, FontAwesome6 } from '@expo/vector-icons';
 import { Marker } from 'react-native-maps';
 

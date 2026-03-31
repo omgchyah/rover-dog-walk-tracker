@@ -5,13 +5,15 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 import LoadingScreen from 'app/components/atoms/LoadingScreen';
 import MainMap from 'app/components/organisms/MainMap';
 import StatBar from 'app/components/molecules/StatBar';
+import SpotterModal from 'app/components/organisms/SpotterModal';
 import usePlace from 'hooks/usePlace';
-import { MapRegion } from 'types/location';
+import useSpotter from 'hooks/useSpotter';
 
 export default function HomeScreen() {
   const { route, isTracking, startTracking, stopTracking, initialLocation } = useLocation();
   const { handlePress, setIsFollowing, handleRegionChange, handleRecenter, MapRef } = useMapController({isTracking, startTracking, stopTracking, route, initialLocation});
   const { places, isLoading } = usePlace();
+  const { tempCoordinate, isSheetVisible, handleMapLongPress, handleCancel } = useSpotter();
 
   if (!initialLocation || isLoading) return <LoadingScreen message='Finding your location...' />
   
@@ -29,7 +31,12 @@ export default function HomeScreen() {
         handleRegionChange={handleRegionChange}
         route={route}
         places={places}
+        handleMapLongPress={handleMapLongPress}
+        tempCoordinate={tempCoordinate}
       />
+
+        
+
 
       <AppButton
       title={'Follow me'}
@@ -44,6 +51,11 @@ export default function HomeScreen() {
         variant={isTracking ? 'secondary' : 'primary'}
         />
 
+          <SpotterModal
+            tempCoordinate={tempCoordinate}
+            handleCancel={handleCancel}
+            isSheetVisible={isSheetVisible}
+          />
     </View>
   )
 }

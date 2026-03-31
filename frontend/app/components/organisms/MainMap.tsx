@@ -12,13 +12,13 @@ interface MainMapInterface {
     handleRegionChange: (region: MapRegion) => void;
     route: Coordinate[];
     places: Place[];
-    newCoordinate: Coordinate;
     handleMapLongPress: (coordinate: Coordinate) => void;
+    tempCoordinate: Coordinate | null;
     onPress: () => void;
 }
 
 const MainMap = (
-    {setIsFollowing, MapRef, initialLocation, handleRegionChange, route, places, handleMapLongPress, newCoordinate, onPress }: MainMapInterface
+    {setIsFollowing, MapRef, initialLocation, handleRegionChange, route, places, handleMapLongPress, tempCoordinate, onPress }: MainMapInterface
 ) => {
   return (
     <MapView
@@ -29,8 +29,17 @@ const MainMap = (
       onRegionChangeComplete={(handleRegionChange)}
       showsUserLocation={true}
       followsUserLocation={false}
-      onLongPress={(e) => handleMapLongPress(newCoordinate)}
+      onLongPress={(e) => handleMapLongPress(e.nativeEvent.coordinate)}
       >
+      
+      {tempCoordinate && (
+          <Marker
+            coordinate={tempCoordinate}
+            opacity={0.5}
+            title='NewSpotLocation'
+          />
+      )}
+
       {places.map(place => {
 
         return (

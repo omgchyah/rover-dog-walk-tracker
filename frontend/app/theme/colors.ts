@@ -1,4 +1,4 @@
-export const COLORS = {
+const COLORS = {
     success: '#2ecc71',
     warning: '#e67e22',
     danger: '#e74c3c',
@@ -9,3 +9,5 @@ export const COLORS = {
     nature: '#27ae60',
     fun: '#ea311c',
 }
+
+export default COLORS;
