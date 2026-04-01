@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Place } from '../types/place'
+import { Place } from '../src/types/place'
 import { getPlaces } from "services/api";
 
 const usePlace = () => {

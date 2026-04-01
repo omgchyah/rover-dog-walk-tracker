@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 import React from 'react'
 import MapView, { Marker, Polyline } from 'react-native-maps'
-import { Coordinate, MapRegion } from 'types/location';
-import { Place } from 'types/place';
+import { Coordinate, MapRegion } from '@/types/location';
+import { Place } from '@/types/place';
 import AppMarker from '../atoms/AppMarker';
 
 interface MainMapInterface {
@@ -41,13 +41,18 @@ const MainMap = (
       )}
 
       {places.map(place => {
+        const lat = Number(place.latitude);
+        const lng = Number(place.longitude);
 
         return (
+          // <Marker
+          // coordinate={{latitude: lat, longitude: lng}} />
+
             <AppMarker
               key={place.id}
               category={place.category}
-              latitude={Number(place.latitude)}
-              longitude={Number(place.longitude)}
+              latitude={lat}
+              longitude={lng}
               onPress={onPress}
               />
         );

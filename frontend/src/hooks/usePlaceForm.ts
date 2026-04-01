@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { Coordinate } from "types/location";
-import { Place, Category } from "types/place";
+import { Coordinate } from "@/types/location";
+import { Place, Category } from "@/types/place";
 
 
 

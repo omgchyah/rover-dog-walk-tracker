@@ -1,30 +1,54 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
-import AppLabel from '../atoms/AppLabel'
-import ChevronIcon from 'app/icons/ChevronIcon';
-import { Category } from 'types/place';
+import { Category } from '@/types/place';
 import AppChip from '../atoms/AppChip';
+import { CATEGORY_UI_DATA } from '@/constants/categories';
+import AppLabel from '../atoms/AppLabel';
 
 interface AppSelectInterface {
     categories: Category[];
     label: string;
     required?: boolean;
-    isCategorySelected: boolean;
-    selectedCategory: string;
+    selectedCategory: Category;
+    onSelect: (category: Category) => void;
 }
 
 const AppSelect = (
-    {categories, label, required, isCategorySelected, selectedCategory}:
+    {categories, label, required, selectedCategory, onSelect}:
     AppSelectInterface
 ) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
+      <AppLabel
+      label={label}
+      required={required}
+      />
 
-      {categories.map(category) => (
-        <AppChip />
-      )}
+    <ScrollView
+    horizontal 
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.carouselContainer}
+        >
+      {categories.map((catValue: Category) => {
+        const metadata = CATEGORY_UI_DATA[catValue]
 
-
+        if(!metadata || !metadata.icon) {
+          console.warn(`Missing metadata for category: ${catValue}`);
+            return null;
+        }
+        
+        return (
+          <AppChip
+          key={catValue}
+          label={metadata.label}
+          icon={metadata.icon}
+          color={metadata.color}
+          isActive={selectedCategory == catValue}
+          onPress={() => onSelect(catValue)}
+          />
+        )
+      })}
+      </ScrollView>
     </View>
   )
 }
@@ -32,9 +56,14 @@ const AppSelect = (
 export default AppSelect
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',      
-    }
+  mainContainer: {
+    marginVertical: 10,
+},
+carouselContainer: {
+    flexDirection: 'row',
+    gap: 4, 
+    paddingVertical: 12,
+    paddingHorizontal: 4, 
+}
 })
 

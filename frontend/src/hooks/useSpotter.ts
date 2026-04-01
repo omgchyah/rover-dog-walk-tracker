@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Coordinate } from 'types/location'
+import { Coordinate } from '@/types/location'
 
 const useSpotter = () => {
     const [tempCoordinate, setTempCoordinate] = useState<Coordinate | null>(null);

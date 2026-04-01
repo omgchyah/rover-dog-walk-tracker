@@ -6,8 +6,9 @@ const COLORS = {
     primary: '#8e44ad',
     lodging: '#2ecc71',
     food: '#e67e22',
-    nature: '#27ae60',
-    fun: '#ea311c',
+    nature: '#217a46',
+    fun: '#ea1cba',
+    brown: '#642307',
 }
 
 export default COLORS;
