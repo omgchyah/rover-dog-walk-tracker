@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 import React from 'react'
 import MapView, { Marker, Polyline } from 'react-native-maps'
-import { Coordinate, MapRegion } from 'types/location';
-import { Place } from 'types/place';
+import { Coordinate, MapRegion } from '@/types/location';
+import { Place } from '@/types/place';
 import AppMarker from '../atoms/AppMarker';
 
 interface MainMapInterface {
@@ -12,13 +12,13 @@ interface MainMapInterface {
     handleRegionChange: (region: MapRegion) => void;
     route: Coordinate[];
     places: Place[];
-    newCoordinate: Coordinate;
     handleMapLongPress: (coordinate: Coordinate) => void;
+    tempCoordinate: Coordinate | null;
     onPress: () => void;
 }
 
 const MainMap = (
-    {setIsFollowing, MapRef, initialLocation, handleRegionChange, route, places, handleMapLongPress, newCoordinate, onPress }: MainMapInterface
+    {setIsFollowing, MapRef, initialLocation, handleRegionChange, route, places, handleMapLongPress, tempCoordinate, onPress }: MainMapInterface
 ) => {
   return (
     <MapView
@@ -29,16 +29,30 @@ const MainMap = (
       onRegionChangeComplete={(handleRegionChange)}
       showsUserLocation={true}
       followsUserLocation={false}
-      onLongPress={(e) => handleMapLongPress(newCoordinate)}
+      onLongPress={(e) => handleMapLongPress(e.nativeEvent.coordinate)}
       >
+      
+      {tempCoordinate && (
+          <Marker
+            coordinate={tempCoordinate}
+            opacity={0.5}
+            title='NewSpotLocation'
+          />
+      )}
+
       {places.map(place => {
+        const lat = Number(place.latitude);
+        const lng = Number(place.longitude);
 
         return (
+          // <Marker
+          // coordinate={{latitude: lat, longitude: lng}} />
+
             <AppMarker
               key={place.id}
               category={place.category}
-              latitude={Number(place.latitude)}
-              longitude={Number(place.longitude)}
+              latitude={lat}
+              longitude={lng}
               onPress={onPress}
               />
         );

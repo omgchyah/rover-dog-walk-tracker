@@ -1,17 +1,19 @@
 import AppButton from 'app/components/atoms/AppButton';
-import useLocation from '../../hooks/useLocation'
-import useMapController from '../../hooks/useMapController';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import useLocation from '../../src/hooks/useLocation'
+import useMapController from '../../src/hooks/useMapController';
+import { StyleSheet, View } from 'react-native';
 import LoadingScreen from 'app/components/atoms/LoadingScreen';
 import MainMap from 'app/components/organisms/MainMap';
 import StatBar from 'app/components/molecules/StatBar';
-import usePlace from 'hooks/usePlace';
-import { MapRegion } from 'types/location';
+import SpotterModal from 'app/components/organisms/SpotterModal';
+import usePlace from '../../src/hooks/usePlace';
+import useSpotter from '../../src/hooks/useSpotter';
 
 export default function HomeScreen() {
   const { route, isTracking, startTracking, stopTracking, initialLocation } = useLocation();
   const { handlePress, setIsFollowing, handleRegionChange, handleRecenter, MapRef } = useMapController({isTracking, startTracking, stopTracking, route, initialLocation});
   const { places, isLoading } = usePlace();
+  const { tempCoordinate, isSheetVisible, handleMapLongPress, handleCancel } = useSpotter();
 
   if (!initialLocation || isLoading) return <LoadingScreen message='Finding your location...' />
   
@@ -29,7 +31,12 @@ export default function HomeScreen() {
         handleRegionChange={handleRegionChange}
         route={route}
         places={places}
+        handleMapLongPress={handleMapLongPress}
+        tempCoordinate={tempCoordinate}
       />
+
+        
+
 
       <AppButton
       title={'Follow me'}
@@ -44,6 +51,11 @@ export default function HomeScreen() {
         variant={isTracking ? 'secondary' : 'primary'}
         />
 
+          <SpotterModal
+            tempCoordinate={tempCoordinate}
+            handleCancel={handleCancel}
+            isSheetVisible={isSheetVisible}
+          />
     </View>
   )
 }

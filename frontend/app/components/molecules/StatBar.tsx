@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { Coordinate } from 'types/location'
+import { Coordinate } from '@/types/location'
 
 interface StatBarInterface {
     route: Coordinate[];

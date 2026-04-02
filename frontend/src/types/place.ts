@@ -1,4 +1,4 @@
-enum Category {
+export enum Category {
     LODGING = "Lodging",
         CAFE = "Cafe",
         RESTAURANT = "Restaurant",
@@ -10,7 +10,7 @@ enum Category {
 }
 
 export interface Place {
-    id: number;
+    id?: number;
     name: string;
     description: string;
     category: Category;
@@ -19,6 +19,6 @@ export interface Place {
     allows_unleashed: boolean;
     requires_entry_fee: boolean;
     is_enclosed: boolean;
-    created_at: Date;
-    updated_at: Date;
+    created_at?: Date;
+    updated_at?: Date;
 }

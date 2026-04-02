@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Coordinate, Delta, MapRegion } from "types/location";
+import { Coordinate, Delta, MapRegion } from "@/types/location";
 import MapView from "react-native-maps";
 
 interface useMapControllerInterface {

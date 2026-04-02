@@ -1,37 +1,38 @@
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { mapIcon } from './mapIcon';
-import { MaterialCommunityIcons, FontAwesome6 } from '@expo/vector-icons';
 import { Marker } from 'react-native-maps';
+import { CATEGORY_UI_DATA } from '@/constants/categories'; 
+import { Category } from '@/types/place';
+import * as Icons from '@/icons/mapIcon'
 
-interface AppMArkerInterface {
-    category: string;
+
+interface AppMarkerInterface {
+    category: Category;
     latitude: number;
     longitude: number;
     onPress: () => void;
 }
 
-const AppMarker = (
-    {category, latitude, longitude, onPress}:
-    AppMArkerInterface
-) => {
-    const iconConfig = mapIcon(category);
-    const IconLib = iconConfig.lib || MaterialCommunityIcons;
+const AppMarker = ({ category, latitude, longitude, onPress }: AppMarkerInterface) => {
+    const metadata = CATEGORY_UI_DATA[category];
     
+    const IconComponent = metadata?.icon || Icons.StoreIcon;
+    const themeColor = metadata?.color || '#3498db';
+
     return (
         <Marker
-            coordinate={
-                { latitude: latitude, longitude: longitude }}
-                onPress={onPress}
+            coordinate={{ latitude, longitude }}
+            onPress={onPress}
+            tracksViewChanges={true}
+            zIndex={100}
         >
             <View style={styles.markerCircle}>
-                <IconLib 
-                    name={iconConfig.name} 
-                    size={18} 
-                    color={iconConfig.color} 
-                />
+                {IconComponent && (
+                    <IconComponent color={themeColor} size={20} />
+                )}
             </View>
         </Marker>
-        );
+    );
 };
 
 export default AppMarker

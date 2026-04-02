@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from 'react-native'
 import * as Location from 'expo-location';
-import { Coordinate, MapRegion } from "types/location";
+import { Coordinate, MapRegion } from "@/types/location";
 
 
 const useLocation = () => {
