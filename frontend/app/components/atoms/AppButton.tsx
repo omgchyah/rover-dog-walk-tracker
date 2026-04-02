@@ -5,10 +5,11 @@ interface ButtonInterface {
   title: string;
   onPress: () => void;
   variant: 'primary' | 'secondary' | 'danger' | 'floating';
+  disabled?: boolean;
 }
 
 const AppButton = (
-  {title, onPress, variant}: ButtonInterface
+  {title, onPress, variant, disabled }: ButtonInterface
 ) => {
   return (
     <Pressable
@@ -19,6 +20,7 @@ const AppButton = (
         styles[`${variant}Button` as keyof typeof styles] as ViewStyle,
         pressed && styles.pressed
     ]}
+    disabled={disabled}
     >
       <Text
       style={[styles.baseText,

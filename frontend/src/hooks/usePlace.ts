@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Place } from '../src/types/place'
+import { Place } from '../../src/types/place'
 import { getPlaces } from "services/api";
 
 const usePlace = () => {
@@ -15,12 +15,17 @@ const usePlace = () => {
         fetchPlaces();
     }, []);
 
+    const addPlaceLocally = (newPlace: Place) => {
+        setPlaces((prev) => [...prev, newPlace]);
+    }
+
 
 
     return {
         places,
         setPlaces,
-        isLoading
+        isLoading,
+        addPlaceLocally
     }
 }
 
