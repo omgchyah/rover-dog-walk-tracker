@@ -6,8 +6,9 @@ import LoadingScreen from 'app/components/atoms/LoadingScreen';
 import MainMap from 'app/components/organisms/MainMap';
 import StatBar from 'app/components/molecules/StatBar';
 import SpotterModal from 'app/components/organisms/SpotterModal';
-import usePlace, { Place } from '../../src/hooks/usePlace';
+import usePlace from '../../src/hooks/usePlace';
 import useSpotter from '../../src/hooks/useSpotter';
+import { Place } from '@/types/place';
 
 export default function HomeScreen() {
   const { route, isTracking, startTracking, stopTracking, initialLocation } = useLocation();

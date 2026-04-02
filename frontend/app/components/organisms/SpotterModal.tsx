@@ -4,7 +4,7 @@ import {
     View, 
     Modal, 
     TouchableOpacity, 
-    TouchableWithoutFeedback, 
+    Pressable, 
     KeyboardAvoidingView, 
     Platform 
   } from 'react-native'
@@ -13,6 +13,7 @@ import {
   import { Coordinate } from '../../../src/types/location'
   import PlaceForm from './PlaceForm';
 import { Place } from '@/types/place';
+import COLORS from '@/theme/colors';
   
   interface SpotterModalInterface {
       tempCoordinate: Coordinate | null;
@@ -29,41 +30,23 @@ import { Place } from '@/types/place';
         transparent={true}
         onRequestClose={handleCancel}
       >
-        {/* 1. Backdrop tap-to-close */}
-        <TouchableWithoutFeedback onPress={handleCancel}>
-          <View style={styles.overlay}>
-            
-            {/* 2. Prevent taps inside the sheet from closing it */}
-            <TouchableWithoutFeedback>
               <KeyboardAvoidingView 
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={styles.sheet}
               >
-                {/* 3. The Visual Handle */}
-                <View style={styles.handle} />
-  
-                <View style={styles.header}>
+                <Pressable onPress={(e) => e.stopPropagation()} style={styles.sheet}>
+
                   <Text style={styles.title}>Create New Spot</Text>
-                </View>
-  
-                <View style={styles.content}>
-                  {tempCoordinate && <PlaceForm
+
+                  {tempCoordinate && 
+                  <PlaceForm
                   tempCoordinate={tempCoordinate}
                   onSuccess={onSaveSuccess}
-                  />}
-                </View>
-  
-                <View style={styles.footer}>
-                  <AppButton
-                    title='Cancel'
-                    variant='danger'
-                    onPress={handleCancel}
+                  handleCancel={handleCancel}
                   />
-                </View>
+                  }
+                  
+                </Pressable>
               </KeyboardAvoidingView>
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
       </Modal>
     )
   }
@@ -74,21 +57,19 @@ import { Place } from '@/types/place';
       overlay: {
           flex: 1,
           justifyContent: 'flex-end',
-          backgroundColor: 'rgba(0, 0, 0, 0.4)', // Slightly lighter backdrop
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
       },
       sheet: {
-          maxHeight: '85%', // Don't let it cover the WHOLE screen
-          minHeight: '40%',
-          borderTopLeftRadius: 24,
-          borderTopRightRadius: 24,
+        justifyContent: 'flex-end',
+          height: '100%',
+          borderTopLeftRadius: 32,
+          borderTopRightRadius: 32,
           backgroundColor: 'white',
-          paddingHorizontal: 20,
-          paddingBottom: Platform.OS === 'ios' ? 40 : 20, // Extra space for home bar
-          // Shadow for "sitting on top" look
-          shadowColor: "#000",
+          // paddingHorizontal: 10,
+          // paddingBottom: Platform.OS === 'ios' ? 40 : 20,
           shadowOffset: { width: 0, height: -4 },
-          shadowOpacity: 0.1,
-          shadowRadius: 10,
+          shadowOpacity: 0.15,
+          shadowRadius: 15,
           elevation: 20,
       },
       handle: {
@@ -99,20 +80,57 @@ import { Place } from '@/types/place';
           alignSelf: 'center',
           marginTop: 10,
           marginBottom: 15,
+          shadowColor: "#000",
+        shadowOffset: { width: 0, height: -20 },
+        shadowOpacity: 0.5,
+        shadowRadius: 10,
+        elevation: 10,
       },
       header: {
-          marginBottom: 10,
       },
       title: {
-          fontSize: 20,
-          fontWeight: 'bold',
-          color: '#333',
-          textAlign: 'center',
+        paddingVertical: 24,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: '#F0F0F0',
+        fontSize: 20,
+        fontWeight: '700',
+        color: '#1A1A1A',
+        textAlign: 'center',
+        // shadowColor: "#000",
+        // shadowOffset: { width: 0, height: 10 },
+        // shadowOpacity: 0.5,
+        // shadowRadius: 10,
+        // elevation: 10,
       },
       content: {
-          flexShrink: 1, // Allows form to be scrollable if needed
+          flexShrink: 1,
       },
       footer: {
-          marginTop: 20,
-      }
+
+        paddingTop: 50,
+        // paddingBottom: Platform.OS === 'ios' ? 40 : 25,
+        backgroundColor: 'white',
+        borderTopWidth: Platform.OS === 'android' ? 0 : 1, 
+        borderTopColor: '#F0F0F0',
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: -20 },
+        shadowOpacity: 0.5,
+        shadowRadius: 10,
+        elevation: 10,
+
+      },
+      cancelButton: {
+        padding: 12,
+        margin: 8,
+        borderRadius: 16,
+        backgroundColor: COLORS.danger,
+        color: 'white',
+        fontWeight: 'bold',
+
+
+      },
+      closeButtonWrapper: {
+        width: 52,
+        alignItems: 'flex-end',
+    },
   })

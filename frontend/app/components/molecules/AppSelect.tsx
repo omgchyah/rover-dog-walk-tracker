@@ -58,6 +58,8 @@ export default AppSelect
 const styles = StyleSheet.create({
   mainContainer: {
     marginVertical: 10,
+    textAlign: 'center',
+    alignItems: 'center',
 },
 carouselContainer: {
     flexDirection: 'row',

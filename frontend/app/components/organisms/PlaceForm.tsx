@@ -13,10 +13,11 @@ import useSpotter from '@/hooks/useSpotter';
 interface PlaceFormInterface {
     tempCoordinate: Coordinate;
     onSuccess: (newPlace: Place) => void;
+    handleCancel: () => void;
 }
 
 const PlaceForm = (
-    {tempCoordinate, onSuccess}:
+    {tempCoordinate, onSuccess, handleCancel}:
     PlaceFormInterface
 ) => {
     const { formData, updateField, handleValidation, loading, errors } = usePlaceForm({
@@ -60,6 +61,12 @@ const PlaceForm = (
         variant='primary'
         onPress={handleValidation}
         disabled={loading}
+        />
+
+        <AppButton
+        title='Cancel'
+        variant='danger'
+        onPress={handleCancel}
         />
 
     </ScrollView>
