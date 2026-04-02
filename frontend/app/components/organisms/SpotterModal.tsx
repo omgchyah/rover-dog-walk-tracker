@@ -12,20 +12,22 @@ import {
   import AppButton from '../atoms/AppButton'
   import { Coordinate } from '../../../src/types/location'
   import PlaceForm from './PlaceForm';
+import { Place } from '@/types/place';
   
   interface SpotterModalInterface {
       tempCoordinate: Coordinate | null;
       handleCancel: () => void;
       isSheetVisible: boolean;
+      onSaveSuccess: (place: Place) => void;
   }
   
-  const SpotterModal = ({ tempCoordinate, handleCancel, isSheetVisible }: SpotterModalInterface) => {
+  const SpotterModal = ({ tempCoordinate, handleCancel, isSheetVisible, onSaveSuccess }: SpotterModalInterface) => {
     return (
       <Modal
         visible={!!tempCoordinate && isSheetVisible}
         animationType='slide'
         transparent={true}
-        onRequestClose={handleCancel} // Handles Android back button
+        onRequestClose={handleCancel}
       >
         {/* 1. Backdrop tap-to-close */}
         <TouchableWithoutFeedback onPress={handleCancel}>
@@ -45,7 +47,10 @@ import {
                 </View>
   
                 <View style={styles.content}>
-                  {tempCoordinate && <PlaceForm tempCoordinate={tempCoordinate} />}
+                  {tempCoordinate && <PlaceForm
+                  tempCoordinate={tempCoordinate}
+                  onSuccess={onSaveSuccess}
+                  />}
                 </View>
   
                 <View style={styles.footer}>

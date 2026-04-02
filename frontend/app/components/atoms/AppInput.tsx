@@ -34,13 +34,10 @@ export default AppInput
 
 const styles = StyleSheet.create({
     textBox: {
-        // 1. Change this from 'flex-start' to 'stretch' (or remove it, 'stretch' is default)
         alignItems: 'stretch', 
         justifyContent: 'center',
         paddingHorizontal: 16, // This creates the internal "breathing room"
         backgroundColor: 'white',
-        
-        // 2. Remove 'flex: 1' unless this single input should fill the whole screen height
         width: '100%', 
         marginVertical: 12,
         gap: 8,

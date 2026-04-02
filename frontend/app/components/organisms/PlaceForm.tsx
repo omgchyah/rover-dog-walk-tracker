@@ -5,31 +5,44 @@ import { Coordinate } from '@/types/location'
 import usePlaceForm from '../../../src/hooks/usePlaceForm';
 import AppSelect from '../molecules/AppSelect';
 import AppSwitch from '../atoms/AppSwitch';
-import { Category } from '../../../src/types/place'
+import { Category, Place } from '../../../src/types/place'
+import AppButton from '../atoms/AppButton';
+import ErrorText from '../atoms/ErrorText';
+import useSpotter from '@/hooks/useSpotter';
 
 interface PlaceFormInterface {
     tempCoordinate: Coordinate;
+    onSuccess: (newPlace: Place) => void;
 }
 
 const PlaceForm = (
-    {tempCoordinate}:
+    {tempCoordinate, onSuccess}:
     PlaceFormInterface
 ) => {
-
-    const { formData, updateField } = usePlaceForm(tempCoordinate);
+    const { formData, updateField, handleValidation, loading, errors } = usePlaceForm({
+        tempCoordinate,
+    onSuccess: (newPlace) => {
+        onSuccess(newPlace);
+    }
+    });
 
   return (
     <ScrollView
     keyboardShouldPersistTaps='handled'>
-    
+
+        {errors.submit && <ErrorText message={errors.submit}/>}
+
+        {errors.name && <ErrorText message={errors.name}/>}    
         <AppInput label='Name' placeholder='Write name of establishment'
         required value={formData.name} onChange={(text) => updateField('name', text)}
         />
 
+{errors.description && <ErrorText message={errors.description}/>}
         <AppInput label='Description' placeholder='Provide a brief description'
-        required value={formData.description} onChange={(text) => updateField('description', text)}
+        required={false} value={formData.description} onChange={(text) => updateField('description', text)}
         />
 
+{errors.category && <ErrorText message={errors.category}/>}
         <AppSelect label='Choose a category'
         categories={Object.values(Category)}
         selectedCategory={formData.category}
@@ -42,6 +55,12 @@ const PlaceForm = (
 
         <AppSwitch label='Is it an enclosed space?' value={formData.is_enclosed} toggleSwitch={() => updateField('is_enclosed', !formData.is_enclosed)} />
 
+        <AppButton
+        title='Submit'
+        variant='primary'
+        onPress={handleValidation}
+        disabled={loading}
+        />
 
     </ScrollView>
   )
