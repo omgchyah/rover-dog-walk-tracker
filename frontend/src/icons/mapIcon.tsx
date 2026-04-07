@@ -178,3 +178,5 @@ export const StoreIcon = ({ color = '#000', size = 24 }: IconProps) => (
       </G>
     </Svg>
   );
+
+  
