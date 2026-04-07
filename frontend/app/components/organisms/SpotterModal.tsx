@@ -1,12 +1,8 @@
 import { 
     StyleSheet, 
-    Text, 
-    View, 
-    Modal, 
-    TouchableOpacity, 
+    Text,
+    Modal,
     Pressable, 
-    KeyboardAvoidingView, 
-    Platform 
   } from 'react-native'
   import React from 'react'
   import AppButton from '../atoms/AppButton'

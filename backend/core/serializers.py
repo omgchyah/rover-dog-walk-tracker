@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Place, Review, Pet, Walk, PetWalkDetail, WalkPoint
+from django.db.models import Avg
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -20,6 +21,8 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class PlaceSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
+    average_review = serializers.SerializerMethodField()
+    review_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Place
@@ -36,7 +39,20 @@ class PlaceSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "reviews",
+            "average_review",
+            "review_count",
         )
+
+    def get_average_review(self, obj):
+        avg_rating = 0
+
+        if obj.reviews.exists():
+            avg_rating = obj.reviews.aggregate(Avg("star")).get("star__avg", 0)
+
+        return round(avg_rating or 0, 1)
+
+    def get_review_count(self, obj):
+        return obj.reviews.count()
 
 
 # Fields can be read-only or write_only
