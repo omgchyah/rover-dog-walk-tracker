@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Alert, ScrollView } from 'react-native'
 import React from 'react'
 import AppInput from '../atoms/AppInput'
 import { Coordinate } from '@/types/location'
@@ -13,10 +13,11 @@ import useSpotter from '@/hooks/useSpotter';
 interface PlaceFormInterface {
     tempCoordinate: Coordinate;
     onSuccess: (newPlace: Place) => void;
+    handleCancel: () => void;
 }
 
 const PlaceForm = (
-    {tempCoordinate, onSuccess}:
+    {tempCoordinate, onSuccess, handleCancel}:
     PlaceFormInterface
 ) => {
     const { formData, updateField, handleValidation, loading, errors } = usePlaceForm({
@@ -25,6 +26,25 @@ const PlaceForm = (
         onSuccess(newPlace);
     }
     });
+
+    const handleCancelPress = () => {
+        Alert.alert(
+            "Discard changes?",
+            "Are you sure ypu want to cancel? Your new spot information will be lost.",
+            [
+                {
+                    text: "Keep editing",
+                    onPress: () => console.log("Cancel stayed"),
+                    style: "cancel",
+                },
+                {
+                    text: "Discard",
+                    onPress: () => handleCancel(),
+                    style: "destructive",
+                },
+            ]
+        );
+    }
 
   return (
     <ScrollView
@@ -60,6 +80,13 @@ const PlaceForm = (
         variant='primary'
         onPress={handleValidation}
         disabled={loading}
+        />
+
+        <AppButton
+        title='Cancel'
+        variant='danger'
+        onPress={handleCancelPress}
+        
         />
 
     </ScrollView>

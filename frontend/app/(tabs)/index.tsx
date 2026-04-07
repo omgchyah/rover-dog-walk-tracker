@@ -1,13 +1,14 @@
 import AppButton from 'app/components/atoms/AppButton';
 import useLocation from '../../src/hooks/useLocation'
 import useMapController from '../../src/hooks/useMapController';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 import LoadingScreen from 'app/components/atoms/LoadingScreen';
 import MainMap from 'app/components/organisms/MainMap';
 import StatBar from 'app/components/molecules/StatBar';
 import SpotterModal from 'app/components/organisms/SpotterModal';
-import usePlace, { Place } from '../../src/hooks/usePlace';
+import usePlace from '../../src/hooks/usePlace';
 import useSpotter from '../../src/hooks/useSpotter';
+import { Place } from '@/types/place';
 
 export default function HomeScreen() {
   const { route, isTracking, startTracking, stopTracking, initialLocation } = useLocation();
@@ -25,6 +26,15 @@ export default function HomeScreen() {
     addPlaceLocally(formattedPlace);
     handleCancel();
     console.log("Spot saved and Map updated!");
+
+    Alert.alert(
+      `Spot Spotted!`,
+      `${newPlace.name} will be reviewed and added to the map for all the neighborhood pups.`,
+      [
+        {text: "Awesome!", onPress: () => handleCancel()}
+      ]
+
+    );
   }
 
   if (!initialLocation || isLoading) return <LoadingScreen message='Finding your location...' />
