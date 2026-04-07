@@ -1,9 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react'
 import MapView, { Marker, Polyline } from 'react-native-maps'
 import { Coordinate, MapRegion } from '@/types/location';
 import { Place } from '@/types/place';
 import AppMarker from '../atoms/AppMarker';
+import PlaceDetailModal from '../molecules/PlaceDetailModal';
 
 interface MainMapInterface {
     setIsFollowing: (isFollowing: boolean) => void;
@@ -14,11 +15,11 @@ interface MainMapInterface {
     places: Place[];
     handleMapLongPress: (coordinate: Coordinate) => void;
     tempCoordinate: Coordinate | null;
-    onPress: () => void;
+    handleMarkerPress: (place: Place) => void;
 }
 
 const MainMap = (
-    {setIsFollowing, MapRef, initialLocation, handleRegionChange, route, places, handleMapLongPress, tempCoordinate, onPress }: MainMapInterface
+    {setIsFollowing, MapRef, initialLocation, handleRegionChange, route, places, handleMapLongPress, tempCoordinate, handleMarkerPress }: MainMapInterface
 ) => {
   return (
     <MapView
@@ -45,17 +46,17 @@ const MainMap = (
         const lng = Number(place.longitude);
 
         return (
-          // <Marker
-          // coordinate={{latitude: lat, longitude: lng}} />
-
-            <AppMarker
-              key={place.id}
-              category={place.category}
-              latitude={lat}
-              longitude={lng}
-              onPress={onPress}
-              />
+          <AppMarker
+            key={place.id}
+            category={place.category}
+            latitude={lat}
+            longitude={lng}
+            onPress={() => handleMarkerPress(place)}
+            />
         );
+
+        
+
       })}
 
         {route.length > 0 && (

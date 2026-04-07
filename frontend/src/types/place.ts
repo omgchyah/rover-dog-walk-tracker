@@ -9,7 +9,18 @@ export enum Category {
         STORE = "Store",
 }
 
-export interface Place {
+export interface Review {
+    id?: number;
+    author_name: string;
+    title: string;
+    star: 1 | 2 | 3 | 4 | 5;
+    body?: string;
+    note?: string;
+    created_at?: Date;
+    updated_at?: Date;
+}
+
+export interface Place extends Review {
     id?: number;
     name: string;
     description: string;
@@ -21,4 +32,7 @@ export interface Place {
     is_enclosed: boolean;
     created_at?: Date;
     updated_at?: Date;
+    reviews?: Review;
+    average_review?: number | null;
+    review_count?: number;
 }

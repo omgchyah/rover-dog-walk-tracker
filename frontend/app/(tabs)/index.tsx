@@ -9,12 +9,15 @@ import SpotterModal from 'app/components/organisms/SpotterModal';
 import usePlace from '../../src/hooks/usePlace';
 import useSpotter from '../../src/hooks/useSpotter';
 import { Place } from '@/types/place';
+import usePlaceDetail from '../../src/hooks/usePlaceDetail'
+import PlaceDetailModal from 'app/components/molecules/PlaceDetailModal';
 
 export default function HomeScreen() {
   const { route, isTracking, startTracking, stopTracking, initialLocation } = useLocation();
   const { handlePress, setIsFollowing, handleRegionChange, handleRecenter, MapRef } = useMapController({isTracking, startTracking, stopTracking, route, initialLocation});
   const { places, isLoading, addPlaceLocally } = usePlace();
   const { tempCoordinate, isSheetVisible, handleMapLongPress, handleCancel } = useSpotter();
+  const { isDetailVisible, handleMarkerPress, selectedPlace, handleCloseModal } = usePlaceDetail();
 
   const handleSaveSuccess = (newPlace: Place) => {
     const formattedPlace = {
@@ -55,6 +58,7 @@ export default function HomeScreen() {
         places={places}
         handleMapLongPress={handleMapLongPress}
         tempCoordinate={tempCoordinate}
+        handleMarkerPress={handleMarkerPress}
       />
 
         
@@ -79,6 +83,13 @@ export default function HomeScreen() {
             isSheetVisible={isSheetVisible}
             onSaveSuccess={handleSaveSuccess}
           />
+
+          {selectedPlace && (
+            <PlaceDetailModal
+            place={selectedPlace}
+            handleCloseModal={handleCloseModal}
+            />
+          )}
     </View>
   )
 }
