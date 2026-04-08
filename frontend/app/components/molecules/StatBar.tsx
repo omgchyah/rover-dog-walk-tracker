@@ -9,14 +9,54 @@ const StatBar = (
     {route}: StatBarInterface
 ) => {
   return (
-    <View>
-      <Text>
-        Points collected: {route.length}
-      </Text>
+    <View style={styles.container}>
+
+      <View style={styles.stat_box}>
+              <Text>
+      Points collected:
+              </Text>
+              <Text>
+      {route.length}
+              </Text>
+      </View>
+
+      <View style={styles.stat_box}>
+              <Text>
+        Walk Time:
+                </Text>
+                <Text>
+        {route.length}
+        </Text>
+        </View>
+
+
+      <View style={styles.stat_box}>
+        <Text>
+          Distance:
+        </Text>
+        <Text>
+0
+        </Text>
+      </View>
+      
     </View>
   )
 }
 
 export default StatBar
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    alignContent: 'center',
+    alignItems: 'center',
+    gap: 8,
+    paddingBottom: 8,
+    flexDirection: 'row',
+    paddingHorizontal: 16
+  },
+  stat_box: {
+    flexDirection: 'column',
+
+  }
+
+})
