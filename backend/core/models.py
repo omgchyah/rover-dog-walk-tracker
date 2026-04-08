@@ -63,6 +63,7 @@ class Pet(models.Model):
     breed = models.CharField(max_length=30, default="mixed")
     is_social = models.BooleanField(default=True)
     is_pipican_allowed = models.BooleanField(default=True)
+    image_url = models.CharField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} ({self.get_pet_type_display()})"

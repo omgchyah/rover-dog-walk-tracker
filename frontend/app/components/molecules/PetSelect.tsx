@@ -42,7 +42,7 @@ const PetSelect = (
           >
             <View style={styles.petInfo}>
               <Image
-              source={{ uri: 'https://placedog.net/150/150' }}
+              source={{ uri: pet.image_url }}
               style={styles.avatar}
               />
               <Text style={styles.petName}>{pet.name}</Text>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 60,
     height: 60,
-    borderRadius: 30, // Círculo perfecto
+    borderRadius: 30,
     backgroundColor: '#F1F3F4',
   },
   petName: {

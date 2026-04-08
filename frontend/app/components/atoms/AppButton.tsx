@@ -39,13 +39,14 @@ const styles = StyleSheet.create({
   baseButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 16,
+    paddingVertical: 12,
     paddingHorizontal: 8,
     borderRadius: 32,
     borderWidth: 2,
     borderColor: 'transparent',
     overflow: 'hidden',
-    margin: 16,
+    marginTop: 8,
+    marginHorizontal: 8
   },
   pressed: {
     opacity: 0.7,
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
     shadowRadius: 12,
-    elevation: 4,
+    elevation: 5,
   },
   secondaryButton: {
     backgroundColor: 'white',

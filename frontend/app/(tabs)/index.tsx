@@ -1,7 +1,7 @@
 import AppButton from 'app/components/atoms/AppButton';
 import useLocation from '../../src/hooks/useLocation'
 import useMapController from '../../src/hooks/useMapController';
-import { StyleSheet, View, Text, Alert } from 'react-native';
+import { StyleSheet, View, Text, Alert, Image, ScrollView } from 'react-native';
 import LoadingScreen from 'app/components/atoms/LoadingScreen';
 import MainMap from 'app/components/organisms/MainMap';
 import StatBar from 'app/components/molecules/StatBar';
@@ -17,18 +17,19 @@ import PetSelect from 'app/components/molecules/PetSelect';
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
-  const { route, isTracking, startTracking, stopTracking, initialLocation } = useLocation();
+  const { route, isTracking, startTracking, stopTracking, initialLocation, clearRoute } = useLocation();
   const { handlePress, setIsFollowing, handleRegionChange, handleRecenter, MapRef } = useMapController({isTracking, startTracking, stopTracking, route, initialLocation});
   const { places, isLoading, addPlaceLocally } = usePlace();
   const { tempCoordinate, isSheetVisible, handleMapLongPress, handleCancel } = useSpotter();
   const { handleMarkerPress, selectedPlace, handleCloseModal } = usePlaceDetail();
-  const { selectedPets, togglePet, handlePetSelection, isPetModalVisible, pets } = usePet();
+  const { selectedPets, togglePet, handlePetSelection, isPetModalVisible, pets, clearPets } = usePet();
   const handleSaveSuccess = (newPlace: Place) => {
     const formattedPlace = {
       ...newPlace,
       latitude: Number(newPlace.latitude),
       longitude: Number(newPlace.longitude),
     };
+
 
     addPlaceLocally(formattedPlace);
     handleCancel();
@@ -43,6 +44,12 @@ export default function HomeScreen() {
 
     );
   }
+  const handleFinishWalk = () => {
+    stopTracking();
+    clearPets();
+    clearRoute();
+  }
+  const activePets = pets.filter(pet => selectedPets.includes(pet.id));
 
   if (!initialLocation || isLoading) return <LoadingScreen message='Finding your location...' />
   
@@ -50,7 +57,7 @@ export default function HomeScreen() {
     <View
     style={[
       styles.mainContainer,
-      {paddingTop: insets.top}
+      {paddingTop: insets.top, paddingBottom: insets.bottom}
     ]}
     >
       <Text style={styles.title}>
@@ -75,16 +82,33 @@ export default function HomeScreen() {
       
 
       <AppButton
-      title={'Follow me'}
+      title={'Center'}
       onPress={handleRecenter}
       variant='floating'
       />
 
-      <StatBar
+<ScrollView horizontal={true} style={{flexGrow: 0}}> 
+      {activePets.length > 0 && (
+        activePets.map((pet) => (
+          
+          <View key={pet.id} style={styles.petInfo}> 
+            <Image
+            source={{uri: pet.image_url}}
+             style={styles.avatar}
+                    />
+          <Text style={styles.petName}>{pet.name}</Text>
+          </View>
+          
+        ))
+      )}
+      </ScrollView>
+
+      
+
+<View style={styles.actionButtons}>
+{/* <StatBar
       route={route}
-      />
-
-
+      /> */}
         {selectedPets.length > 0 && <AppButton
         title={isTracking ? 'Pause Walk' : 'Start Walk'}
         onPress={handlePress}
@@ -92,14 +116,16 @@ export default function HomeScreen() {
         />
 }
 
-{/* {isTracking && (
+{isTracking && selectedPets.length > 0 && (
+  
+  
   <AppButton
   title={'Finish Walk'}
-  onPress={handlePress}
+  onPress={handleFinishWalk}
   variant={'danger'}
   />
-
-)} */}
+  
+)}
 
 {selectedPets.length === 0 && <AppButton
         title={'Select pets to walk'}
@@ -107,6 +133,7 @@ export default function HomeScreen() {
         variant={isTracking ? 'secondary' : 'primary'}
         />
 }
+</View>
 
           <SpotterModal
             tempCoordinate={tempCoordinate}
@@ -119,6 +146,7 @@ export default function HomeScreen() {
             <PlaceDetailModal
             place={selectedPlace}
             handleCloseModal={handleCloseModal}
+            activePets={activePets}
             />
           )}
 
@@ -137,13 +165,31 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   mainContainer: { 
     alignContent: 'center',
-    gap: 16,
+    gap: 8,
+    flex: 1,
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
     alignSelf: 'center',
     fontWeight: 'bold',
-
-  }
+  },
+  actionButtons: {
+    justifyContent: 'center',
+  },
+  petInfo: {
+    alignItems: 'center',
+    marginHorizontal: 16,
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#F1F3F4',
+  },
+  petName: {
+    fontSize: 8,
+    fontWeight: '500',
+    color: '#212121',
+  },
 });
 

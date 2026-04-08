@@ -9,8 +9,12 @@ const usePet = () => {
 
     useEffect(() =>{
         const fetchPets = async () => {
-            const pets = await getPets();
-            setPets(pets);
+          try {
+            const data = await getPets();
+            setPets(data);
+        } catch (error) {
+            console.error("Error:", error);
+        }
 
         };
         fetchPets();
@@ -27,12 +31,17 @@ const usePet = () => {
         );
       };
 
+      const clearPets = () => {
+        setSelectedPets(prev => []);
+      }
+
       return {
         selectedPets,
         togglePet,
         handlePetSelection,
         isPetModalVisible,
         pets,
+        clearPets
       }
 }
 

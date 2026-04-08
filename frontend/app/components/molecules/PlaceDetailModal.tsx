@@ -1,24 +1,36 @@
 import { StyleSheet, Text, Modal, Pressable, View, ScrollView } from 'react-native'
 import React from 'react'
-import { Place, Review } from '@/types/place';
+import { Category, Place, Review } from '@/types/place';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import COLORS from '@/theme/colors';
 import Stars from '../atoms/Stars';
 import Foundation from '@expo/vector-icons/Foundation';
 import AppReview from '../atoms/AppReview';
+import { Pet } from '../../../src/types/pet'
 
 interface PlaceDetailModalInterface {
     place: Place | null;
     handleCloseModal: () => void;
+    activePets: Pet[];
 }
 
 const PlaceDetailModal = ({
-    place, handleCloseModal
+    place, handleCloseModal, activePets
 }: PlaceDetailModalInterface) => {
     const insets = useSafeAreaInsets();
 
     const reviews = place?.reviews;
+
+    const forbiddenInPipican = activePets.filter(pet => !pet.is_pipican_allowed && place?.category === Category.PIPI_CAN).map(pet => pet.name);
+
+    const nonSocialInUnleashed = activePets.filter(pet => !pet.is_social && place?.allows_unleashed).map(pet => pet.name)
+
+    const escapeRisks = activePets.filter(pet => !pet.is_social && !place?.is_enclosed).map(pet => pet.name)
+
+    const hasWarnings = forbiddenInPipican.length > 0 || 
+    nonSocialInUnleashed.length > 0 || 
+    escapeRisks.length > 0;
 
   return (
     <Modal
@@ -110,6 +122,39 @@ const PlaceDetailModal = ({
     
 
              )}
+{hasWarnings && (
+
+
+    <View style={styles.warningContainer}>
+    {forbiddenInPipican.length > 0 && (
+        <View style={styles.warningItem}>
+            <Foundation name="alert" size={16} color={COLORS.danger} />
+            <Text style={styles.warningText}>
+                <Text style={{fontWeight: '700'}}>{forbiddenInPipican.join(', ')}</Text> 
+                {forbiddenInPipican.length > 1 ? ' are' : ' is'} not allowed in Pipí cans.
+            </Text>
+        </View>
+    )}
+
+    {nonSocialInUnleashed.length > 0 && (
+        <View style={styles.warningItem}>
+            <FontAwesome name="warning" size={14} color={COLORS.warning} />
+            <Text style={styles.warningText}>
+                This place allows unleashed dogs. Careful with <Text style={{fontWeight: '700'}}>{nonSocialInUnleashed.join(', ')}</Text>.
+            </Text>
+        </View>
+    )}
+
+    {escapeRisks.length > 0 && (
+        <View style={styles.warningItem}>
+            <FontAwesome name="bolt" size={14} color={COLORS.danger} />
+            <Text style={styles.warningText}>
+                Be mindful of <Text style={{fontWeight: '700'}}>{escapeRisks.join(', ')}</Text> running off!
+            </Text>
+        </View>
+    )}
+</View>
+)}
 
 
     </Pressable>
@@ -205,6 +250,23 @@ const styles = StyleSheet.create({
         color: '#70757a',
         fontStyle: 'italic',
         marginTop: 5,
+    },
+    warningContainer: {
+        backgroundColor: '#FFF4F4', // Un rojo muy clarito
+        padding: 12,
+        borderRadius: 12,
+        marginTop: 15,
+        gap: 8,
+    },
+    warningItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    warningText: {
+        fontSize: 13,
+        color: '#D32F2F', // Un rojo oscuro para el texto
+        flex: 1,
     }
 
 });
