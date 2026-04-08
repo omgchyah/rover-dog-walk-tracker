@@ -34,6 +34,20 @@ export async function getWalkPoints(walkId: number) {
         throw new Error(error instanceof Error ? error.message : String(error))
     }
 }
+export async function getPets() {
+    try {
+        const response = await fetch(`${BASE_URL}/pets/`, {
+            method: 'GET',
+            headers: {
+                "Content-type": 'application/json'
+            }
+        });
+        const pets = await response.json();
+        return pets;
+    } catch (error) {
+        throw new Error(error instanceof Error ? error.message : String(error));
+    }
+}
 export async function getPlaces() {
     try {
         const response = await fetch(`${BASE_URL}/places/`, {
@@ -65,3 +79,4 @@ export async function postPlace(data: Place) {
 
  }
 }
+

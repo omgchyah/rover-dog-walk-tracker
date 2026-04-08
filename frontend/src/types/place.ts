@@ -11,9 +11,9 @@ export enum Category {
 
 export interface Review {
     id?: number;
-    author_name: string;
-    title: string;
-    star: 1 | 2 | 3 | 4 | 5;
+    author_name?: string;
+    title?: string;
+    star?: 1 | 2 | 3 | 4 | 5;
     body?: string;
     note?: string;
     created_at?: Date;
