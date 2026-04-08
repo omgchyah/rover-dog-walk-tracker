@@ -1,7 +1,7 @@
 import AppButton from 'app/components/atoms/AppButton';
 import useLocation from '../../src/hooks/useLocation'
 import useMapController from '../../src/hooks/useMapController';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import LoadingScreen from 'app/components/atoms/LoadingScreen';
 import MainMap from 'app/components/organisms/MainMap';
 import StatBar from 'app/components/molecules/StatBar';
@@ -11,8 +11,10 @@ import useSpotter from '../../src/hooks/useSpotter';
 import { Place } from '@/types/place';
 import usePlaceDetail from '../../src/hooks/usePlaceDetail'
 import PlaceDetailModal from 'app/components/molecules/PlaceDetailModal';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
+  const insets = useSafeAreaInsets();
   const { route, isTracking, startTracking, stopTracking, initialLocation } = useLocation();
   const { handlePress, setIsFollowing, handleRegionChange, handleRecenter, MapRef } = useMapController({isTracking, startTracking, stopTracking, route, initialLocation});
   const { places, isLoading, addPlaceLocally } = usePlace();
@@ -43,10 +45,15 @@ export default function HomeScreen() {
   if (!initialLocation || isLoading) return <LoadingScreen message='Finding your location...' />
   
   return (
-    <View style={styles.mainContainer}>
-      <StatBar
-      route={route}
-      />
+    <View
+    style={[
+      styles.mainContainer,
+      {paddingTop: insets.top}
+    ]}
+    >
+      <Text style={styles.title}>
+              Walk Tracker
+            </Text>
 
 
       <MainMap
@@ -63,11 +70,16 @@ export default function HomeScreen() {
 
         
 
+      
 
       <AppButton
       title={'Follow me'}
       onPress={handleRecenter}
       variant='floating'
+      />
+
+      <StatBar
+      route={route}
       />
 
 
@@ -95,8 +107,15 @@ export default function HomeScreen() {
 }
   
 const styles = StyleSheet.create({
-  mainContainer: {
-    paddingTop: 42,    
+  mainContainer: { 
+    alignContent: 'center',
+    gap: 16,
   },
+  title: {
+    fontSize: 24,
+    alignSelf: 'center',
+    fontWeight: 'bold',
+
+  }
 });
 
