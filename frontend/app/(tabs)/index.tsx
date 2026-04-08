@@ -8,10 +8,12 @@ import StatBar from 'app/components/molecules/StatBar';
 import SpotterModal from 'app/components/organisms/SpotterModal';
 import usePlace from '../../src/hooks/usePlace';
 import useSpotter from '../../src/hooks/useSpotter';
+import usePet from '../../src/hooks/usePet';
 import { Place } from '@/types/place';
 import usePlaceDetail from '../../src/hooks/usePlaceDetail'
 import PlaceDetailModal from 'app/components/molecules/PlaceDetailModal';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import PetSelect from 'app/components/molecules/PetSelect';
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
@@ -19,8 +21,8 @@ export default function HomeScreen() {
   const { handlePress, setIsFollowing, handleRegionChange, handleRecenter, MapRef } = useMapController({isTracking, startTracking, stopTracking, route, initialLocation});
   const { places, isLoading, addPlaceLocally } = usePlace();
   const { tempCoordinate, isSheetVisible, handleMapLongPress, handleCancel } = useSpotter();
-  const { isDetailVisible, handleMarkerPress, selectedPlace, handleCloseModal } = usePlaceDetail();
-
+  const { handleMarkerPress, selectedPlace, handleCloseModal } = usePlaceDetail();
+  const { selectedPets, togglePet, handlePetSelection, isPetModalVisible, pets } = usePet();
   const handleSaveSuccess = (newPlace: Place) => {
     const formattedPlace = {
       ...newPlace,
@@ -83,11 +85,28 @@ export default function HomeScreen() {
       />
 
 
-        <AppButton
-        title={isTracking ? 'Finish Walk' : 'Start Walk'}
+        {selectedPets.length > 0 && <AppButton
+        title={isTracking ? 'Pause Walk' : 'Start Walk'}
         onPress={handlePress}
         variant={isTracking ? 'secondary' : 'primary'}
         />
+}
+
+{/* {isTracking && (
+  <AppButton
+  title={'Finish Walk'}
+  onPress={handlePress}
+  variant={'danger'}
+  />
+
+)} */}
+
+{selectedPets.length === 0 && <AppButton
+        title={'Select pets to walk'}
+        onPress={handlePetSelection}
+        variant={isTracking ? 'secondary' : 'primary'}
+        />
+}
 
           <SpotterModal
             tempCoordinate={tempCoordinate}
@@ -102,6 +121,15 @@ export default function HomeScreen() {
             handleCloseModal={handleCloseModal}
             />
           )}
+
+          {isPetModalVisible && (
+            <PetSelect
+            pets={pets}
+            selectedPets={selectedPets}
+            togglePet={togglePet}
+            onClose={handlePetSelection}
+            />
+            )}
     </View>
   )
 }

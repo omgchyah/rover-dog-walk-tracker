@@ -1,9 +1,8 @@
 import { StyleSheet, Text, Modal, Pressable, View, ScrollView } from 'react-native'
 import React from 'react'
-import { Place } from '@/types/place';
+import { Place, Review } from '@/types/place';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import Feather from '@expo/vector-icons/Feather';
 import COLORS from '@/theme/colors';
 import Stars from '../atoms/Stars';
 import Foundation from '@expo/vector-icons/Foundation';
@@ -96,7 +95,7 @@ const PlaceDetailModal = ({
                                     contentContainerStyle={styles.reviewsScroll}
                                 >
                                     {reviews && reviews.length > 0 ? (
-                                        reviews.map((item, index) => (
+                                        reviews.map((item: Review, index: number) => (
                                             <AppReview key={index} review={item} />
                                         ))
                                     ) : (
