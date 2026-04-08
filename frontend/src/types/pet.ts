@@ -6,4 +6,5 @@ export interface Pet {
     breed: string;
     is_social: boolean;
     is_pipican_allowed: boolean;
+    image_url: string;
 }

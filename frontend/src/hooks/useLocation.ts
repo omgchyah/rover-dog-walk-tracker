@@ -88,12 +88,17 @@ const useLocation = () => {
         };
     }, [subscription]);
 
+    const clearRoute = () => {
+        setRoute(prev => []);
+    }
+
     return {
         route,
         isTracking,
         startTracking,
         stopTracking,
-        initialLocation
+        initialLocation,
+        clearRoute
     }
 }
 

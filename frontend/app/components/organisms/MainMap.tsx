@@ -84,6 +84,7 @@ export default MainMap
 const styles = StyleSheet.create({
       mapContainer: {
         width: '100%',
-        height: '65%',
+        flex: 1,
+        overflow: 'hidden',
       },
 })

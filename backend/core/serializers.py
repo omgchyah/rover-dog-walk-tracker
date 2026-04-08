@@ -69,6 +69,7 @@ class PetSerializer(serializers.ModelSerializer):
             "breed",
             "is_social",
             "is_pipican_allowed",
+            "image_url",
         )
 
 
