@@ -51,7 +51,7 @@ export default function HomeScreen() {
   }
   const activePets = pets.filter(pet => selectedPets.includes(pet.id));
 
-  if (!initialLocation || isLoading) return <LoadingScreen message='Finding your location...' />
+  if (!initialLocation || isLoading || !pets) return <LoadingScreen message='Finding your location...' />
   
   return (
     <View
