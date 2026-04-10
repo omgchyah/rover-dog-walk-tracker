@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Pet } from '../../src/types/pet'
-import { getPets } from "services/api";
+import { getPets } from '../../services/api';
 
 const usePet = () => {
     const [pets, setPets] = useState<Pet[]>([]);
     const [selectedPets, setSelectedPets] = useState<number[]>([]);
     const [isPetModalVisible, setisPetModalVisible] = useState<boolean>(false);
+    const [isLoadingPets, setIsLoadingPets] = useState<boolean>(true);
 
     useEffect(() =>{
         const fetchPets = async () => {
           try {
             const data = await getPets();
             setPets(data);
+            setIsLoadingPets(false);
         } catch (error) {
             console.error("Error:", error);
         }
@@ -41,7 +43,8 @@ const usePet = () => {
         handlePetSelection,
         isPetModalVisible,
         pets,
-        clearPets
+        clearPets,
+        isLoadingPets
       }
 }
 

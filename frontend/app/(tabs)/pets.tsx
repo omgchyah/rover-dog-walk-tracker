@@ -4,42 +4,45 @@ import usePet from '@/hooks/usePet'
 import COLORS from '@/theme/colors'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import Foundation from '@expo/vector-icons/Foundation'
+import { Pet } from '../../src/types/pet'
+import LoadingScreen from 'app/components/atoms/LoadingScreen'
+
+
 
 const PetsTab = () => {
-  const { pets, loading } = usePet();
+  const { pets, isLoadingPets } = usePet();
 
-  const renderPetCard = ({ item }: { item: any }) => (
+  const renderPetCard = ({ item: pet }: { item: Pet }) => (
     <View style={styles.card}>
-      <Image source={{ uri: item.image_url }} style={styles.image} />
+      <Image source={{ uri: pet.image_url }} style={styles.image} />
       
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.breed}>{item.breed}</Text>
+          <Text style={styles.name}>{pet.name}</Text>
+          <Text style={styles.breed}>{pet.breed}</Text>
         </View>
 
         <View style={styles.tagContainer}>
-          {/* Tag de Social */}
-          <View style={[styles.tag, item.is_social ? styles.tagSuccess : styles.tagDanger]}>
+          <View style={[styles.tag, pet.is_social ? styles.tagSuccess : styles.tagDanger]}>
             <FontAwesome 
-              name={item.is_social ? "users" : "user-times"} 
+              name={pet.is_social ? "users" : "user-times"} 
               size={12} 
-              color={item.is_social ? "#2e7d32" : "#c62828"} 
+              color={pet.is_social ? "#2e7d32" : "#c62828"} 
             />
-            <Text style={[styles.tagText, { color: item.is_social ? "#2e7d32" : "#c62828" }]}>
-              {item.is_social ? "Social" : "Grumpy"}
+            <Text style={[styles.tagText, { color: pet.is_social ? "#2e7d32" : "#c62828" }]}>
+              {pet.is_social ? "Social" : "Grumpy"}
             </Text>
           </View>
 
-          {/* Tag de Pipican */}
-          <View style={[styles.tag, item.is_pipican_allowed ? styles.tagSuccess : styles.tagDanger]}>
+          {/* Pipican tag */}
+          <View style={[styles.tag, pet.is_pipican_allowed ? styles.tagSuccess : styles.tagDanger]}>
             <Foundation 
               name="trees" 
               size={14} 
-              color={item.is_pipican_allowed ? "#2e7d32" : "#c62828"} 
+              color={pet.is_pipican_allowed ? "#2e7d32" : "#c62828"} 
             />
-            <Text style={[styles.tagText, { color: item.is_pipican_allowed ? "#2e7d32" : "#c62828" }]}>
-              {item.is_pipican_allowed ? "Pipican OK" : "No Pipican"}
+            <Text style={[styles.tagText, { color: pet.is_pipican_allowed ? "#2e7d32" : "#c62828" }]}>
+              {pet.is_pipican_allowed ? "Pipican OK" : "No Pipican"}
             </Text>
           </View>
         </View>
@@ -47,6 +50,8 @@ const PetsTab = () => {
     </View>
   );
 
+  if (isLoadingPets) return <LoadingScreen message='Loading all pets...' />
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>My Pets</Text>
@@ -84,10 +89,10 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
     borderRadius: 20,
-    overflow: 'hidden', // Para que la imagen respete el border radius
+    overflow: 'hidden',
     flexDirection: 'row',
-    elevation: 3, // Sombra en Android
-    shadowColor: '#000', // Sombra en iOS
+    elevation: 3,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,

@@ -10,12 +10,6 @@ const usePlaceDetail = () => {
             setIsDetailVisible(true);
     }
 
-    // const getReviewAverage = () => {
-    //     if (selectedPlace) {
-    //         selectedPlace.
-    //     }
-    // }
-
 
     const handleCloseModal = () => {
         setSelectedPlace(null);
