@@ -54,7 +54,6 @@ class Pet(models.Model):
         CAT = "Cat"
 
     name = models.CharField(max_length=50, blank=False, null=False)
-    # Can be change to owner_id once I create MVP (backlog)
     owner_name = models.CharField(max_length=50, blank=False, null=False)
     pet_type = models.CharField(
         max_length=5, choices=PetType.choices, default=PetType.DOG

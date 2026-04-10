@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Place } from '../../src/types/place'
-import { getPlaces } from "services/api";
+import { getPlaces } from '../../services/api';
 
 const usePlace = () => {
     const [places, setPlaces] = useState<Place[]>([]);

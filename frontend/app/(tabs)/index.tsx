@@ -1,19 +1,19 @@
-import AppButton from 'app/components/atoms/AppButton';
+import AppButton from '../../app/components/atoms/AppButton'
 import useLocation from '../../src/hooks/useLocation'
 import useMapController from '../../src/hooks/useMapController';
 import { StyleSheet, View, Text, Alert, Image, ScrollView } from 'react-native';
-import LoadingScreen from 'app/components/atoms/LoadingScreen';
-import MainMap from 'app/components/organisms/MainMap';
-import StatBar from 'app/components/molecules/StatBar';
-import SpotterModal from 'app/components/organisms/SpotterModal';
+import LoadingScreen from '../../app/components/atoms/LoadingScreen';
+import MainMap from '../../app/components/organisms/MainMap';
+import StatBar from '../../app/components/molecules/StatBar';
+import SpotterModal from '../../app/components/organisms/SpotterModal';
 import usePlace from '../../src/hooks/usePlace';
 import useSpotter from '../../src/hooks/useSpotter';
 import usePet from '../../src/hooks/usePet';
 import { Place } from '@/types/place';
 import usePlaceDetail from '../../src/hooks/usePlaceDetail'
-import PlaceDetailModal from 'app/components/molecules/PlaceDetailModal';
+import PlaceDetailModal from '../../app/components/molecules/PlaceDetailModal';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import PetSelect from 'app/components/molecules/PetSelect';
+import PetSelect from '../../app/components/molecules/PetSelect';
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();

@@ -12,6 +12,8 @@ import LoadingScreen from 'app/components/atoms/LoadingScreen'
 const PetsTab = () => {
   const { pets, isLoadingPets } = usePet();
 
+  if (isLoadingPets) return <LoadingScreen message='Loading my pets...' />
+
   const renderPetCard = ({ item: pet }: { item: Pet }) => (
     <View style={styles.card}>
       <Image source={{ uri: pet.image_url }} style={styles.image} />

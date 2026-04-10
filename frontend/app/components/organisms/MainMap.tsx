@@ -23,6 +23,7 @@ const MainMap = (
 ) => {
   return (
     <MapView
+    testID='main-map'
       onPanDrag={() => setIsFollowing(false)}
       ref={MapRef}
       style={styles.mapContainer}
