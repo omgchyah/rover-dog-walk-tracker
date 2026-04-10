@@ -1,6 +1,11 @@
 # Rover Dog Walk Tracker (MVP) 🐾
 
-A full-stack web application designed for professional dog walkers to track their routes, log pet activities (pee/poop/mood), and discover dog-friendly spots in real-time.
+A full-stack application designed for professional dog walkers to navigate safely. This tool allows walkers to track routes in real-time, discover dog-friendly spots, and receive safety alerts tailored to the specific characteristics of the pet they are walking.
+
+## 🔗 Live Links
+
+- [Backend API](https://rover-dog-walk-tracker-production.up.railway.app/)
+- **Database:** Hosted on Neon (PostgreSQL)
 
 ## 🚀 Tech Stack
 
@@ -12,56 +17,71 @@ A full-stack web application designed for professional dog walkers to track thei
 
 ## 📋 Core Features (MVP)
 
-- **Walk Tracking:** Start and end walk sessions with real-time GPS coordinate logging.
-- **Activity Logging:** Mark specific locations where a dog peed, pooped, or showed a specific mood.
+- **Pet-Centric Walk Sessions:** Select a pet and start a walk. The app pulls the pet's unique characteristics.
+- **Dog-Friendly Discovery:** Create and pin new dog-friendly locations (cafes, parks, pipi cans).
 - **Interactive Map:** View the live route on a Google Maps interface.
 - **Dog Profiles:** Select and manage specific pets for each walk session.
-- **Route History:** (Post-MVP) Review past walks and statistics.
 
 ## 🏗️ Project Structure
 
 ```text
 rover-dog-walk-tracker/
-├── backend/            # Django REST API
-│   ├── config/         # Project settings & routing
-│   ├── core/           # Dog, Walk, and GPS models/logic
-│   └── .venv/          # Python virtual environment
-├── frontend/           # React SPA
-│   ├── src/            # Components, Hooks, and Services
-│   └── public/         # Static assets
-└── .gitignore          # Root-level git exclusions
+├── backend/                # Django REST API
+│   ├── config/             # Settings & WSGI/ASGI (Railway)
+│   ├── core/               # Models: Pets, Places, Walks, Alerts
+│   ├── manage.py           # Django CLI
+│   ├── requirements.txt    # Python dependencies
+│   └── Procfile            # Railway deployment config
+├── frontend/               # React Native / Expo App
+│   ├── app/                # Expo Router (Tabs & Layouts)
+│   │   └── components/     # Atomic Design (Atoms, Molecules, Organisms)
+│   ├── src/                # Shared Logic
+│   │   ├── hooks/          # Custom React hooks (usePet, useLocation)
+│   │   ├── services/       # API Integration
+│   │   └── theme/          # UI Styling
+│   └── tests/              # Jest/Library tests
+└── .env                    # Environment variables (API Keys, DB URLs)
 ```
 
-## 🛠️ Local Development Setup
+## 🛠️ Local Development
 
-### Backend Setup
+### Prerequisites
 
-1. Navigate to the backend folder: cd backend
+- Node.js & npm
 
-2. Activate virtual environment: source .venv/bin/activate
+- Python 3.x (if running backend locally)
 
-3. Install dependencies: pip install -r requirements.txt
+- Expo Go app on your mobile device
 
-4. Run migrations: python manage.py migrate
+### Setup
 
-5. Start server: python manage.py runserver
+1. Clone the repo
 
-### Frontend Setup
+2. Frontend Setup:
 
-1. Navigate to the frontend folder: cd frontend
+```quote
+cd frontend
+npm install
+npx expo start
+```
 
-2. Install dependencies: npm install
+3. Backend Setup (Optional - Live API is used by default):
 
-3. Start development server: npm run dev
+```quote
+cd backend
+source .venv/bin/activate
+pip install -r requirements.txt
+python manage.py runserver
+```
 
-## 🛤️ Roadmap (2-Week Sprint)
+## 🛤️ Development Flow
 
-[ ] Phase 1: Database Schema & API Scaffolding
+1. Database Design: Defined schema for Pets, Places, and dynamic Alerts on Neon.
 
-[ ] Phase 2: Google Maps Integration & Geolocation Tracking
+2. User Stories: Mapped out the "Pet-Safe" walking experience.
 
-[ ] Phase 3: Event Logging System (Pee/Poop/Mood)
+3. Backend Implementation: Built DRF endpoints for real-time location and place creation.
 
-[ ] Phase 4: UI Polishing & Deployment
+4. Frontend Architecture: Implemented Atomic Design and custom hooks for clean state management.
 
 ---
