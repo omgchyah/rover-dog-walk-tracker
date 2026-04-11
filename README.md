@@ -59,20 +59,20 @@ rover-dog-walk-tracker/
 
 2. Frontend Setup:
 
-```quote
-cd frontend
-npm install
-npx expo start
-```
+    ```quote
+    cd frontend
+    npm install
+    npx expo start
+    ```
 
 3. Backend Setup (Optional - Live API is used by default):
 
-```quote
-cd backend
-source .venv/bin/activate
-pip install -r requirements.txt
-python manage.py runserver
-```
+    ```quote
+    cd backend
+    source .venv/bin/activate
+    pip install -r requirements.txt
+    python manage.py runserver
+    ```
 
 ## 🛤️ Development Flow
 

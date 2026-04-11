@@ -1,0 +1,22 @@
+digraph RoverModels {
+  fontname="Helvetica,Arial,sans-serif"
+  node [fontname="Helvetica,Arial,sans-serif", shape=record, style=filled, fillcolor="#FDFEFE"]
+  edge [fontname="Helvetica,Arial,sans-serif", color="#2E4053", arrowhead=vee]
+
+  // Tables
+  Place [label="{Place | name\l category\l latitude/longitude\l allows_unleashed (bool)\l is_enclosed (bool)\l }", fillcolor="#D1F2EB"]
+  Review [label="{Review | author_name\l star (Int)\l title\l body\l }", fillcolor="#D1F2EB"]
+  Pet [label="{Pet | name\l owner_name\l breed\l is_social (bool)\l }", fillcolor="#FBEEE6"]
+  Walk [label="{Walk | start_time\l end_time\l }", fillcolor="#EBF5FB"]
+  PetWalkDetail [label="{PetWalkDetail (Through Table) | poops (Int)\l pees (Int)\l mood (Enum)\l }", fillcolor="#EBF5FB", style="filled,dashed"]
+  WalkPoint [label="{WalkPoint | latitude\l longitude\l created_at\l }", fillcolor="#EBF5FB"]
+
+  // Relationships
+  Place -> Review [label="1:N (place_id)"]
+  Pet -> PetWalkDetail [label="1:N"]
+  Walk -> PetWalkDetail [label="1:N"]
+  Walk -> WalkPoint [label="1:N"]
+  
+  // Logical link (ManyToMany)
+  Pet -> Walk [style=dotted, label="M:N", dir=both]
+}
